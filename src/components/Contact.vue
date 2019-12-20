@@ -19,6 +19,13 @@
           <i class="fas fa-user"></i>
           <span>私聊</span>
         </div>
+        <div
+          class="cont-priv-item"
+          :class="{'select': selectedPrivate && selectedPrivate.id === item.id}"
+          v-for="(item, index) in privates"
+          :key="index"
+          @click="selectPrivate(item)"
+        >{{item.name}}</div>
       </el-collapse-item>
     </el-collapse>
   </div>
@@ -34,12 +41,24 @@ import contactCfg from "@/scripts/contactCfg";
 export default class ComContact extends Vue {
   private collapse: string = "";
   private selectedGroup: Contact.Group | null = null;
+  private selectedPrivate: Contact.Private | null = null;
 
   private get groups() {
-    return contactCfg.pubArray;
+    return contactCfg.groups;
   }
+
+  private get privates() {
+    return contactCfg.privates;
+  }
+
   private selectGroup(group: Contact.Group) {
     this.selectedGroup = group;
+    this.selectedPrivate = null;
+  }
+
+  private selectPrivate(priv: Contact.Private) {
+    this.selectedPrivate = priv;
+    this.selectedGroup = null;
   }
 }
 </script>
@@ -55,7 +74,8 @@ export default class ComContact extends Vue {
     }
   }
 
-  &-group {
+  &-group,
+  &-priv {
     &-item {
       color: var(--color-regular-text);
       cursor: pointer;

@@ -1,9 +1,14 @@
 import { Contact } from "@/scripts/contact";
 
-const pubArray: Contact.Group[] = [
+const groups: Contact.Group[] = [
   new Contact.Group(100, '工作', 'work', 'work'),
   new Contact.Group(101, '生活', 'living', 'living'),
   new Contact.Group(102, '娱乐', 'entertainment', 'entertainment'),
 ]
 
-export default { pubArray }
+const privates: Contact.Private[] = [
+  new Contact.Private(1001, "Stephen Wu", "0x123"),
+  new Contact.Private(1002, "Kawai Lenard", "0x456"),
+]
+
+export default { groups, privates }

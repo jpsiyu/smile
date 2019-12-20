@@ -13,5 +13,14 @@ export namespace Contact {
     }
   }
 
-  export class Private { }
+  export class Private {
+    public name: string;
+    public pubKey: string;
+
+    constructor(id: number, name: string, pubKey: string) {
+      this.id = id;
+      this.name = name;
+      this.pubKey = pubKey;
+    }
+  }
 }
