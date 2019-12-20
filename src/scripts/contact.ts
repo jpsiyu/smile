@@ -1,4 +1,4 @@
-export namespace Contact {
+export namespace contact {
   export class Group {
     public id: number;
     public name: string;

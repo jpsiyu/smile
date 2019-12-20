@@ -24,6 +24,7 @@ import Component from "vue-class-component";
 import CompMessage from "@/components/Message.vue";
 import { message } from "@/scripts/message";
 const Shh = require("web3-shh");
+import hexutil from "@/scripts/hexutil";
 
 @Component({
   components: { CompMessage }
@@ -31,14 +32,29 @@ const Shh = require("web3-shh");
 export default class Chart extends Vue {
   private msg: string = "";
   private chats: message.Message[] = [];
-  private ssh: any;
+  private shh: any;
+  private symKeyID: string = "";
+  private topic: string = "0xaabbccdd";
 
-  private created() {
-    const shh = new Shh("ws://localhost:8546");
-    console.log(shh);
+  private async created() {
+    this.shh = new Shh("ws://localhost:8546");
+    this.symKeyID = await this.shh.generateSymKeyFromPassword("hello");
+
+    this.shh.subscribe(
+      "messages",
+      {
+        symKeyID: this.symKeyID,
+        topics: [this.topic]
+      },
+      (error: Error, message: any, subscription: any) => {
+        const msgHex: string = message.payload;
+        const msg: message.Message = hexutil.decodeFromHex(msgHex);
+        this.chats.push(msg);
+      }
+    );
   }
 
-  private handleEnter() {
+  private async handleEnter() {
     if (!this.msg) {
       return;
     }
@@ -48,7 +64,17 @@ export default class Chart extends Vue {
     }
 
     const msg: message.Message = new message.Message("Tom", msgFix, Date.now());
-    this.chats.push(msg);
+
+    const symKeyID = await this.shh.generateSymKeyFromPassword("hello");
+
+    const hash = await this.shh.post({
+      symKeyID: this.symKeyID,
+      topic: this.topic,
+      payload: hexutil.encodeToHex(JSON.stringify(msg)),
+      powTime: 3,
+      powTarget: 0.5
+    });
+
     setTimeout(() => {
       this.msg = "";
       this.scrollBottom();

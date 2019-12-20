@@ -1,14 +1,14 @@
-import { Contact } from "@/scripts/contact";
+import { contact } from "@/scripts/contact";
 
-const groups: Contact.Group[] = [
-  new Contact.Group(100, '工作', 'work', 'work'),
-  new Contact.Group(101, '生活', 'living', 'living'),
-  new Contact.Group(102, '娱乐', 'entertainment', 'entertainment'),
+const groups: contact.Group[] = [
+  new contact.Group(100, '工作', 'work', 'work'),
+  new contact.Group(101, '生活', 'living', 'living'),
+  new contact.Group(102, '娱乐', 'entertainment', 'entertainment'),
 ]
 
-const privates: Contact.Private[] = [
-  new Contact.Private(1001, "Stephen Wu", "0x123"),
-  new Contact.Private(1002, "Kawai Lenard", "0x456"),
+const privates: contact.Private[] = [
+  new contact.Private(1001, "Stephen Wu", "0x123"),
+  new contact.Private(1002, "Kawai Lenard", "0x456"),
 ]
 
 export default { groups, privates }

@@ -34,14 +34,14 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Contact } from "@/scripts/contact";
+import { contact } from "@/scripts/contact";
 import contactCfg from "@/scripts/contactCfg";
 
 @Component({})
 export default class ComContact extends Vue {
   private collapse: string = "";
-  private selectedGroup: Contact.Group | null = null;
-  private selectedPrivate: Contact.Private | null = null;
+  private selectedGroup: contact.Group | null = null;
+  private selectedPrivate: contact.Private | null = null;
 
   private get groups() {
     return contactCfg.groups;
@@ -51,12 +51,12 @@ export default class ComContact extends Vue {
     return contactCfg.privates;
   }
 
-  private selectGroup(group: Contact.Group) {
+  private selectGroup(group: contact.Group) {
     this.selectedGroup = group;
     this.selectedPrivate = null;
   }
 
-  private selectPrivate(priv: Contact.Private) {
+  private selectPrivate(priv: contact.Private) {
     this.selectedPrivate = priv;
     this.selectedGroup = null;
   }
