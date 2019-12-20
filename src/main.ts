@@ -7,6 +7,8 @@ import store from './store'
 
 import '@/plugins/element'
 
+import "@/assets/color.css"
+
 Vue.config.productionTip = false
 
 new Vue({

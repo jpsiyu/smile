@@ -26,11 +26,10 @@ export default class Home extends Vue {}
   height: 500px;
   margin: 50px auto;
   box-shadow: 0 0 3px 2px rgba(200, 200, 200, 0.5);
-  padding: 10px;
   display: flex;
 
   &-cont {
-    border: 1px red solid;
+    border-right: 1px solid #dcdfe6;
     flex: 1;
   }
 
