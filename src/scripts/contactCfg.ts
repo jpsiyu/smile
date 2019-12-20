@@ -1,9 +1,9 @@
 import { contact } from "@/scripts/contact";
 
 const groups: contact.Group[] = [
-  new contact.Group(100, '工作', 'work', 'work'),
-  new contact.Group(101, '生活', 'living', 'living'),
-  new contact.Group(102, '娱乐', 'entertainment', 'entertainment'),
+  new contact.Group(100, '工作', 'work', '0xaabbccdd'),
+  new contact.Group(101, '生活', 'living', '0x11223344'),
+  new contact.Group(102, '娱乐', 'entertainment', '0xaa22bb44'),
 ]
 
 const privates: contact.Private[] = [

@@ -25,6 +25,8 @@ import CompMessage from "@/components/Message.vue";
 import { message } from "@/scripts/message";
 const Shh = require("web3-shh");
 import hexutil from "@/scripts/hexutil";
+import contactCfg from "@/scripts/contactCfg";
+import { contact } from "@/scripts/contact";
 
 @Component({
   components: { CompMessage }
@@ -34,11 +36,14 @@ export default class Chart extends Vue {
   private chats: message.Message[] = [];
   private shh: any;
   private symKeyID: string = "";
-  private topic: string = "0xaabbccdd";
+  private topic: string = "";
 
   private async created() {
     this.shh = new Shh("ws://localhost:8546");
-    this.symKeyID = await this.shh.generateSymKeyFromPassword("hello");
+    const group: contact.Group = contactCfg.groups[0];
+
+    this.symKeyID = await this.shh.generateSymKeyFromPassword(group.password);
+    this.topic = group.topic;
 
     this.shh.subscribe(
       "messages",
