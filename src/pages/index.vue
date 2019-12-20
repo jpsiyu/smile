@@ -22,6 +22,7 @@ export default class Home extends Vue {}
 
 <style lang="postcss" scoped>
 .home {
+  color: var(--color-regular-text);
   width: 960px;
   height: 500px;
   margin: 50px auto;

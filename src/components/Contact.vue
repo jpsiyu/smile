@@ -32,7 +32,9 @@ export default class Contact extends Vue {
 <style lang="postcss" scoped>
 .cont {
   &-title {
+    color: var(--color-primary-text);
     margin-left: 10px;
+    font-weight: 600;
     span {
       margin-left: 10px;
     }
@@ -40,8 +42,9 @@ export default class Contact extends Vue {
 
   &-group {
     &-item {
+      color: var(--color-regular-text);
       cursor: pointer;
-      padding: 5px 20px;
+      padding: 5px 40px;
       &:hover {
         background: var(--color-lighter-border);
       }
@@ -54,7 +57,7 @@ export default class Contact extends Vue {
   &::before {
     position: absolute;
     top: 45%;
-    left: 10px;
+    left: 25px;
     content: "";
     width: 5px;
     height: 5px;
