@@ -31,6 +31,7 @@ export default class Home extends Vue {}
 
   &-cont {
     flex: 1;
+    background: var(--color-extra-light-border);
   }
 
   &-chat {

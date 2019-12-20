@@ -77,6 +77,7 @@ export default class ComContact extends Vue {
   &-group,
   &-priv {
     &-item {
+      background: var(--color-extra-light-border);
       color: var(--color-regular-text);
       cursor: pointer;
       padding: 5px 40px;
@@ -85,10 +86,16 @@ export default class ComContact extends Vue {
       }
     }
   }
+
+  & >>> .el-collapse-item__wrap,
+  & >>> .el-collapse-item__header {
+    background: var(--color-extra-light-border);
+  }
 }
 
 .select {
   position: relative;
+  background: #fff;
   &::before {
     position: absolute;
     top: 45%;
@@ -98,6 +105,9 @@ export default class ComContact extends Vue {
     height: 5px;
     background: var(--color-success);
     border-radius: 50%;
+  }
+  &:hover {
+    background: #fff;
   }
 }
 </style>

@@ -1,6 +1,10 @@
 <template>
   <div class="chat">
     <div class="chat-top">chat</div>
+    <div class="chat-main">
+      main
+    </div>
+    <div class="chat-input"></div>
   </div>
 </template>
 
@@ -13,15 +17,22 @@ export default class Chart extends Vue {}
 
 <style lang="postcss" scoped>
 .chat {
-  background: var(--color-extra-light-border);
   height: 100%;
+  display: flex;
+  flex-direction: column;
   &-top {
-    background: var(--color-lighter-border);
-    height: 30px;
+    height: 40px;
     display: flex;
     font-weight: 600;
     align-items: center;
     justify-content: center;
+  }
+  &-main{
+    flex: 1;
+  }
+  &-input{
+    height: 100px;
+    margin: 5px;
   }
 }
 </style>
