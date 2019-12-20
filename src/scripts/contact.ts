@@ -14,6 +14,7 @@ export namespace Contact {
   }
 
   export class Private {
+    public id: number;
     public name: string;
     public pubKey: string;
 
