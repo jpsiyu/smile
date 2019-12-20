@@ -23,6 +23,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import CompMessage from "@/components/Message.vue";
 import { message } from "@/scripts/message";
+const Shh = require("web3-shh");
 
 @Component({
   components: { CompMessage }
@@ -30,6 +31,12 @@ import { message } from "@/scripts/message";
 export default class Chart extends Vue {
   private msg: string = "";
   private chats: message.Message[] = [];
+  private ssh: any;
+
+  private created() {
+    const shh = new Shh("ws://localhost:8546");
+    console.log(shh);
+  }
 
   private handleEnter() {
     if (!this.msg) {
