@@ -1,6 +1,6 @@
 
 const decodeFromHex = (hex: string) => {
-  if (!hex || hex.length < 4 || hex[0] != "0" || hex[1] != "x" || hex.length % 2 != 0) {
+  if (!hex || hex.length < 4 || hex[0] !== "0" || hex[1] !== "x" || hex.length % 2 !== 0) {
     console.log(`Invalid hex string: ${hex}`);
     return "";
   } else {
