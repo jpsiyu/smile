@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "Commonjs",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
