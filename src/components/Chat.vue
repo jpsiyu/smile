@@ -32,9 +32,13 @@ export default class Chart extends Vue {
   private chats: message.Message[] = [];
 
   private handleEnter() {
-    if (!this.msg) return;
+    if (!this.msg) {
+      return;
+    }
     const msgFix = this.msg.trim();
-    if (!msgFix) return;
+    if (!msgFix) {
+      return;
+    }
 
     const msg: message.Message = new message.Message("Tom", msgFix, Date.now());
     this.chats.push(msg);
