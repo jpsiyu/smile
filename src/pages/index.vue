@@ -23,19 +23,18 @@ export default class Home extends Vue {}
 <style lang="postcss" scoped>
 .home {
   color: var(--color-regular-text);
-  width: 960px;
+  width: 900px;
   height: 500px;
   margin: 50px auto;
   box-shadow: 0 0 3px 2px rgba(200, 200, 200, 0.5);
   display: flex;
 
   &-cont {
-    border-right: 1px solid #dcdfe6;
     flex: 1;
   }
 
   &-chat {
-    flex: 2;
+    flex: 3;
   }
 }
 </style>
