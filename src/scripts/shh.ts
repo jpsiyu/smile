@@ -4,6 +4,9 @@ import store from '@/store';
 
 export namespace shh {
   const web3 = new Web3()
+  const POW_TIME: number = 3;
+  const POW_TARGET: number = 0.5;
+
   export class Visitor {
     private url: string = "ws://localhost:8546";
     private symPasswd: string = "apple&banana";
@@ -29,8 +32,8 @@ export namespace shh {
         symKeyID: this.symKeyID,
         topic,
         payload: web3.utils.utf8ToHex(JSON.stringify(message)),
-        powTime: 3,
-        powTarget: 0.5
+        powTime: POW_TIME,
+        powTarget: POW_TARGET,
       });
     }
 
