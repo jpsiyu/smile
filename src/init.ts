@@ -28,6 +28,9 @@ const init = (): Promise<void> => {
       })
       return shh.init(topics)
     })
+    .then(() => {
+      console.log("init done")
+    })
 }
 
 export default init

@@ -56,7 +56,11 @@ export default class Chat extends Vue {
       Date.now()
     );
 
-    await this.$shh.send(this.chatting.topic, msg);
+    if (this.chatting instanceof contact.Group) {
+      await this.$shh.send(this.chatting.topic, msg);
+    } else if (this.chatting instanceof contact.Private) {
+      console.log("coming soom");
+    }
 
     setTimeout(() => {
       this.msg = "";
