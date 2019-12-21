@@ -23,6 +23,7 @@ const init = (): Promise<void> => {
         router.push({ path: "/signup" })
         return Promise.reject()
       }
+      me.setPubKey("lll")
       store.commit("setUser", me)
     })
     .then(() => {

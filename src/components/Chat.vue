@@ -26,6 +26,7 @@ import { message } from "@/scripts/message";
 import { contact } from "@/scripts/contact";
 import { mapState } from "vuex";
 import { user } from "@/scripts/user";
+import { shh } from "../scripts/shh";
 
 @Component({
   components: { CompMessage }
@@ -54,9 +55,12 @@ export default class Chat extends Vue {
       return;
     }
 
+    const pubKey: string = await this.me.fillPubKey();
+
     const msg: message.Message = new message.Message(
       this.chatting.id,
       this.me.name,
+      pubKey,
       msgFix,
       Date.now(),
       this.me.head

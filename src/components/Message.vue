@@ -1,5 +1,5 @@
 <template>
-  <div class="msg">
+  <div class="msg" :class="{'me': isMe}">
     <div class="msg-head">
       <img :src="msg.head" alt class="msg-head__img" />
     </div>
@@ -15,11 +15,22 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import { message } from "@/scripts/message";
+import { user } from "@/scripts/user";
 
 @Component({
   props: ["msg"]
 })
-export default class Message extends Vue {}
+export default class Message extends Vue {
+  private get me(): user.User {
+    return this.$store.state.user;
+  }
+
+  private get isMe(): boolean {
+    const res = this.me.pubKey === this.msg.pubKey;
+    console.log("is me", res);
+    return res;
+  }
+}
 </script>
 
 <style lang="postcss" scoped>
