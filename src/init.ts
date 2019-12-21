@@ -1,5 +1,6 @@
 import store from "@/store"
 import { contact } from "@/scripts/contact";
+import { user } from "@/scripts/user";
 import shh from "@/plugins/shh";
 
 const init = (): Promise<void> => {
@@ -16,11 +17,13 @@ const init = (): Promise<void> => {
 
   return Promise.resolve()
     .then(() => {
+      let me = user.User.load()
+      console.log('me', me)
+    })
+    .then(() => {
       store.commit("setGroups", groups);
       store.commit("setPrivates", privates);
       store.commit("setChatting", groups[0]);
-
-      store.commit("setInit", true);
     })
     .then(() => {
       const topics: string[] = groups.map((e: contact.Group) => {
@@ -30,6 +33,7 @@ const init = (): Promise<void> => {
     })
     .then(() => {
       console.log("init done")
+      store.commit("setInit", true);
     })
 }
 
