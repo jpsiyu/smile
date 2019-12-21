@@ -38,6 +38,13 @@ export namespace shh {
       }
     }
 
+    public startPrivSubscribe(keypair: string) {
+      const options = {
+        privateKeyID: keypair
+      }
+      web3.shh.subscribe("messages", options, this.rece)
+    }
+
     public async send(topic: string, message: message.Message) {
       const hash = await web3.shh.post({
         symKeyID: this.symKeyID,
@@ -46,6 +53,15 @@ export namespace shh {
         powTime: POW_TIME,
         powTarget: POW_TARGET,
       });
+    }
+
+    public async sendPriv(pubKey: string, message: message.Message) {
+      const hash = await web3.shh.post({
+        pubKey,
+        payload: web3.utils.utf8ToHex(JSON.stringify(message)),
+        powTime: POW_TIME,
+        powTarget: POW_TARGET,
+      })
     }
 
     public rece(error: Error, message: any, subscription: any) {
@@ -59,6 +75,5 @@ export namespace shh {
     }
 
   }
-
 
 }

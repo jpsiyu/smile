@@ -38,6 +38,8 @@ const init = (): Promise<void> => {
       store.commit("setChatting", groups[0]);
     })
     .then(() => {
+      visitor.startPrivSubscribe(me!.keypair)
+
       const topics: string[] = groups.map((e: contact.Group) => {
         return e.topic
       })

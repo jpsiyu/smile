@@ -62,12 +62,10 @@ export default class Chat extends Vue {
       return;
     }
 
-    const pubKey: string = await this.me.fillPubKey();
-
     const msg: message.Message = new message.Message(
       this.chatting.id,
       this.me.name,
-      pubKey,
+      this.me.pubKey,
       msgFix,
       Date.now(),
       this.me.head
@@ -76,7 +74,7 @@ export default class Chat extends Vue {
     if (this.chatting instanceof contact.Group) {
       await this.$visitor.send(this.chatting.topic, msg);
     } else if (this.chatting instanceof contact.Private) {
-      console.log("coming soom");
+      await this.$visitor.sendPriv(this.me.pubKey, msg);
     }
 
     setTimeout(() => {
