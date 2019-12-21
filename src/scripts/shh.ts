@@ -48,4 +48,12 @@ export namespace shh {
     }
 
   }
+
+  export const newKeyPair = async (): Promise<any> => {
+    return web3.shh.newKeyPair();
+  }
+
+  export const getPubFromKeyPair = async (keypair: string): Promise<any> => {
+    return web3.shh.getPublicKey(keypair)
+  }
 }
