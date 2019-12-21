@@ -9,6 +9,6 @@ export namespace store {
     public chatting: contact.Group | contact.Private | null = null;
     public groups: contact.Group[] = [];
     public privates: contact.Private[] = [];
-    public chatLogs: Map<number, message.Message[]> = new Map<number, message.Message[]>();
+    public chatLogs: Map<string, message.Message[]> = new Map<string, message.Message[]>();
   }
 }

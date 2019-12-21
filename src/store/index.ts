@@ -38,7 +38,7 @@ export default new Vuex.Store({
       logs ? logs.push(payload) : logs = [payload]
       state.chatLogs.set(payload.chatID, logs)
 
-      const newMap = new Map<number, message.Message[]>()
+      const newMap = new Map<string, message.Message[]>()
       for (let [key, value] of state.chatLogs) {
         newMap.set(key, value)
       }

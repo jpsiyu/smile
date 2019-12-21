@@ -19,6 +19,7 @@
           <i class="fas fa-user"></i>
           <span>私聊</span>
         </div>
+        <i class="cont-add fas fa-plus" @click="addPriv"></i>
         <div
           class="cont-item"
           :class="{'select': chatting.id === item.id}"
@@ -61,6 +62,19 @@ export default class ComContact extends Vue {
   private select(item: contact.Group | contact.Private) {
     this.$store.commit("setChatting", item);
   }
+
+  private addPriv() {
+    this.$prompt("请输入对方pubKey", "提示")
+      .then((data: any) => {
+        if (!data.value) {
+          return;
+        }
+        const pubKey = data.value;
+        const priv = new contact.Private(pubKey, "user", pubKey);
+        this.$store.commit("addPrivate", priv);
+      })
+      .catch((err: Error) => {});
+  }
 }
 </script>
 
@@ -83,6 +97,12 @@ export default class ComContact extends Vue {
     &:hover {
       background: var(--color-lighter-border);
     }
+  }
+
+  &-add {
+    width: 100px;
+    margin-left: 40px;
+    cursor: pointer;
   }
 
   & >>> .el-collapse-item__wrap,

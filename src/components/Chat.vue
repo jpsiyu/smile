@@ -74,7 +74,7 @@ export default class Chat extends Vue {
     if (this.chatting instanceof contact.Group) {
       await this.$visitor.send(this.chatting.topic, msg);
     } else if (this.chatting instanceof contact.Private) {
-      await this.$visitor.sendPriv(this.me.pubKey, msg);
+      await this.$visitor.sendPriv(this.chatting.pubKey, msg);
     }
 
     setTimeout(() => {

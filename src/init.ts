@@ -5,7 +5,7 @@ import visitor from "@/plugins/visitor";
 import router from '@/router';
 import { shh } from "@/scripts/shh";
 
-const init = (): Promise<void> => {
+const init = async (): Promise<void> => {
   const groups: contact.Group[] = [
     new contact.Group(100, '工作', 'work', '0xaabbccdd'),
     new contact.Group(101, '生活', 'living', '0x11223344'),
@@ -17,6 +17,7 @@ const init = (): Promise<void> => {
     new contact.Private(1002, "Kawai Lenard", "0x456"),
   ];
 
+  await shh.initWeb3()
 
   let me = user.User.load()
   if (!me) {
@@ -26,12 +27,10 @@ const init = (): Promise<void> => {
 
   return Promise.resolve()
     .then(() => {
-      return shh.initWeb3()
-    })
-    .then(() => {
       return me!.fillPubKey()
     })
     .then(() => {
+      console.log(me!.pubKey)
       store.commit("setUser", me)
       store.commit("setGroups", groups);
       store.commit("setPrivates", privates);

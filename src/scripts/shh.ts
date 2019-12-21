@@ -71,6 +71,7 @@ export namespace shh {
       const msgHex: string = message.payload;
       const msgStr: string = web3.utils.hexToUtf8(msgHex);
       const msg: message.Message = JSON.parse(msgStr)
+      console.log(msg)
       store.commit("pushMessage", msg)
     }
 
