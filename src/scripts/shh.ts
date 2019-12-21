@@ -6,16 +6,27 @@ export namespace shh {
   const web3 = new Web3()
   const POW_TIME: number = 3;
   const POW_TARGET: number = 0.5;
+  const URL: string = "ws://localhost:8546";
+
+  export const newKeyPair = async (): Promise<any> => {
+    return web3.shh.newKeyPair();
+  }
+
+  export const getPubFromKeyPair = async (keypair: string) => {
+    return web3.shh.getPublicKey(keypair);
+  }
+
+  export const initWeb3 = async () => {
+    web3.setProvider(new Web3.providers.WebsocketProvider(URL))
+    await web3.eth.net.isListening()
+  }
 
   export class Visitor {
-    private url: string = "ws://localhost:8546";
     private symPasswd: string = "apple&banana";
     private symKeyID: string = "";
-    private connected: boolean = false;
 
-    public async init(topics: string[]) {
-      await this.initWeb3()
 
+    public async startSubscribe(topics: string[]) {
       this.symKeyID = await web3.shh.generateSymKeyFromPassword(this.symPasswd);
 
       for (let topic of topics) {
@@ -25,15 +36,6 @@ export namespace shh {
         }
         web3.shh.subscribe("messages", options, this.rece)
       }
-    }
-
-    public async initWeb3() {
-      if (this.connected) {
-        return
-      }
-      web3.setProvider(new Web3.providers.WebsocketProvider(this.url))
-      await web3.eth.net.isListening()
-      this.connected = true
     }
 
     public async send(topic: string, message: message.Message) {
@@ -58,11 +60,5 @@ export namespace shh {
 
   }
 
-  export const newKeyPair = async (): Promise<any> => {
-    return web3.shh.newKeyPair();
-  }
 
-  export const getPubFromKeyPair = async (keypair: string): Promise<any> => {
-    return web3.shh.getPublicKey(keypair)
-  }
 }

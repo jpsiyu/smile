@@ -3,6 +3,7 @@ import { contact } from "@/scripts/contact";
 import { user } from "@/scripts/user";
 import visitor from "@/plugins/visitor";
 import router from '@/router';
+import { shh } from "@/scripts/shh";
 
 const init = (): Promise<void> => {
   const groups: contact.Group[] = [
@@ -16,17 +17,22 @@ const init = (): Promise<void> => {
     new contact.Private(1002, "Kawai Lenard", "0x456"),
   ];
 
+
+  let me = user.User.load()
+  if (!me) {
+    router.push({ path: "/signup" })
+    return Promise.reject()
+  }
+
   return Promise.resolve()
     .then(() => {
-      let me = user.User.load()
-      if (!me) {
-        router.push({ path: "/signup" })
-        return Promise.reject()
-      }
-      me.setPubKey("lll")
-      store.commit("setUser", me)
+      return shh.initWeb3()
     })
     .then(() => {
+      return me!.fillPubKey()
+    })
+    .then(() => {
+      store.commit("setUser", me)
       store.commit("setGroups", groups);
       store.commit("setPrivates", privates);
       store.commit("setChatting", groups[0]);
@@ -35,7 +41,7 @@ const init = (): Promise<void> => {
       const topics: string[] = groups.map((e: contact.Group) => {
         return e.topic
       })
-      return visitor.init(topics)
+      return visitor.startSubscribe(topics)
     })
     .then(() => {
       console.log("init done")

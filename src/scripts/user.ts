@@ -30,12 +30,11 @@ export namespace user {
       this.pubKey = "";
     }
 
-    public async fillPubKey() {
+    public async fillPubKey(): Promise<string> {
       if (this.pubKey) {
         return this.pubKey
       }
       this.pubKey = await shh.getPubFromKeyPair(this.keypair)
-      console.log("fill key", this.pubKey)
       return this.pubKey
     }
 
