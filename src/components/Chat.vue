@@ -25,6 +25,7 @@ import CompMessage from "@/components/Message.vue";
 import { message } from "@/scripts/message";
 import { contact } from "@/scripts/contact";
 import { mapState } from "vuex";
+import { user } from "@/scripts/user";
 
 @Component({
   components: { CompMessage }
@@ -40,6 +41,10 @@ export default class Chat extends Vue {
     return this.$store.state.chatLogs.get(this.chatting.id);
   }
 
+  private get me(): user.User {
+    return this.$store.state.user;
+  }
+
   private async handleEnter() {
     if (!this.msg) {
       return;
@@ -51,9 +56,10 @@ export default class Chat extends Vue {
 
     const msg: message.Message = new message.Message(
       this.chatting.id,
-      "Tom",
+      this.me.name,
       msgFix,
-      Date.now()
+      Date.now(),
+      this.me.head
     );
 
     if (this.chatting instanceof contact.Group) {

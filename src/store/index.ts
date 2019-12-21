@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { store } from "@/store/store"
 import { contact } from '@/scripts/contact'
 import { message } from '@/scripts/message'
+import { user } from "@/scripts/user";
 
 Vue.use(Vuex)
 
@@ -13,6 +14,9 @@ export default new Vuex.Store({
   mutations: {
     setInit: (state: store.State, payload: boolean) => {
       state.isInited = payload;
+    },
+    setUser: (state: store.State, payload: user.User) => {
+      state.user = payload;
     },
     setGroups: (state: store.State, payload: contact.Group[]) => {
       state.groups = payload;

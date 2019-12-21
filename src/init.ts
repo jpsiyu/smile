@@ -23,7 +23,7 @@ const init = (): Promise<void> => {
         router.push({ path: "/signup" })
         return Promise.reject()
       }
-      console.log('me', me)
+      store.commit("setUser", me)
     })
     .then(() => {
       store.commit("setGroups", groups);

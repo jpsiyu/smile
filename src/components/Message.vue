@@ -1,7 +1,7 @@
 <template>
   <div class="msg">
     <div class="msg-head">
-      <img src="@/assets/logo.png" alt class="msg-head__img" />
+      <img :src="msg.head" alt class="msg-head__img" />
     </div>
     <div class="msg-main">
       <span class="msg-main__name">{{msg.sender}}</span>
