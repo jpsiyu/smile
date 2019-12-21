@@ -24,6 +24,7 @@ import Component from "vue-class-component";
 import CompMessage from "@/components/Message.vue";
 import { message } from "@/scripts/message";
 import { contact } from "@/scripts/contact";
+import { mapState } from "vuex";
 
 @Component({
   components: { CompMessage }

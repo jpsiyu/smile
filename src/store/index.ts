@@ -30,11 +30,15 @@ export default new Vuex.Store({
       state.chatting = payload;
     },
     pushMessage: (state: store.State, payload: message.Message) => {
-      const logs = state.chatLogs.get(payload.chatID)
-      if (!logs) {
-        return
+      let logs = state.chatLogs.get(payload.chatID)
+      logs ? logs.push(payload) : logs = [payload]
+      state.chatLogs.set(payload.chatID, logs)
+
+      const newMap = new Map<number, message.Message[]>()
+      for (let [key, value] of state.chatLogs) {
+        newMap.set(key, value)
       }
-      logs.push(payload)
+      state.chatLogs = newMap;
     }
   },
   actions: {
