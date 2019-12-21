@@ -2,6 +2,7 @@ import store from "@/store"
 import { contact } from "@/scripts/contact";
 import { user } from "@/scripts/user";
 import shh from "@/plugins/shh";
+import router from '@/router';
 
 const init = (): Promise<void> => {
   const groups: contact.Group[] = [
@@ -18,6 +19,10 @@ const init = (): Promise<void> => {
   return Promise.resolve()
     .then(() => {
       let me = user.User.load()
+      if (!me) {
+        router.push({ path: "/signup" })
+        return Promise.reject()
+      }
       console.log('me', me)
     })
     .then(() => {
@@ -35,6 +40,7 @@ const init = (): Promise<void> => {
       console.log("init done")
       store.commit("setInit", true);
     })
+    .catch(() => { })
 }
 
 export default init

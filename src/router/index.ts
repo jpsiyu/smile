@@ -29,6 +29,11 @@ router.beforeEach(async (to, from, next) => {
     return
   }
 
+  if (to.path === "/signup") {
+    next()
+    return
+  }
+
   await init()
   next()
 })
