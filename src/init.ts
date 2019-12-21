@@ -1,7 +1,7 @@
 import store from "@/store"
 import { contact } from "@/scripts/contact";
 import { user } from "@/scripts/user";
-import shh from "@/plugins/shh";
+import visitor from "@/plugins/visitor";
 import router from '@/router';
 
 const init = (): Promise<void> => {
@@ -35,7 +35,7 @@ const init = (): Promise<void> => {
       const topics: string[] = groups.map((e: contact.Group) => {
         return e.topic
       })
-      return shh.init(topics)
+      return visitor.init(topics)
     })
     .then(() => {
       console.log("init done")

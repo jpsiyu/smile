@@ -6,7 +6,7 @@ import store from './store'
 
 import '@/plugins/axios'
 import '@/plugins/element'
-import "@/plugins/shh"
+import "@/plugins/visitor"
 
 import "@/assets/color.css"
 

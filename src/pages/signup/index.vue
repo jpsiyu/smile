@@ -57,7 +57,7 @@ export default class Signup extends Vue {
   }
 
   private async sure() {
-    await this.$shh.initWeb3();
+    await this.$visitor.initWeb3();
     const keypair: string = await shh.newKeyPair();
     const u = new user.User(keypair, this.nick, this.head);
     u.save();

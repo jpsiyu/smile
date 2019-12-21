@@ -3,6 +3,6 @@ import { shh } from "@/scripts/shh"
 
 const visitor = new shh.Visitor()
 
-Vue.prototype.$shh = visitor
+Vue.prototype.$visitor = visitor
 
 export default visitor
