@@ -17,6 +17,7 @@
           </div>
         </div>
       </el-form-item>
+      <el-button type="primary" :disabled="!ready" @click="sure">选好了</el-button>
     </el-form>
   </div>
 </template>
@@ -24,6 +25,8 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+import { user } from "@/scripts/user";
+import { shh } from "@/scripts/shh";
 
 @Component({})
 export default class Signup extends Vue {
@@ -41,12 +44,24 @@ export default class Signup extends Vue {
       "/images/head07.jpeg",
       "/images/head08.jpeg",
       "/images/head09.jpeg",
-      "/images/head10.jpeg",
+      "/images/head10.jpeg"
     ];
+  }
+
+  private get ready(): boolean {
+    return this.nick !== "" && this.head !== "";
   }
 
   private selectHead(head: string) {
     this.head = head;
+  }
+
+  private async sure() {
+    await this.$shh.initWeb3();
+    const keypair: string = await shh.newKeyPair();
+    const u = new user.User(keypair, this.nick, this.head);
+    u.save();
+    this.$router.push({ path: "/" });
   }
 }
 </script>
@@ -54,7 +69,7 @@ export default class Signup extends Vue {
 <style lang="postcss" scoped>
 .sign {
   &-form {
-    margin: 100px auto;
+    margin: 80px auto;
     width: 300px;
   }
   &-heads {

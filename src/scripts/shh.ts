@@ -11,10 +11,10 @@ export namespace shh {
     private url: string = "ws://localhost:8546";
     private symPasswd: string = "apple&banana";
     private symKeyID: string = "";
+    private connected: boolean = false;
 
     public async init(topics: string[]) {
-      web3.setProvider(new Web3.providers.WebsocketProvider(this.url))
-      await web3.eth.net.isListening()
+      await this.initWeb3()
 
       this.symKeyID = await web3.shh.generateSymKeyFromPassword(this.symPasswd);
 
@@ -25,6 +25,15 @@ export namespace shh {
         }
         web3.shh.subscribe("messages", options, this.rece)
       }
+    }
+
+    public async initWeb3() {
+      if (this.connected) {
+        return
+      }
+      web3.setProvider(new Web3.providers.WebsocketProvider(this.url))
+      await web3.eth.net.isListening()
+      this.connected = true
     }
 
     public async send(topic: string, message: message.Message) {
