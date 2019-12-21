@@ -23,44 +23,20 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import CompMessage from "@/components/Message.vue";
 import { message } from "@/scripts/message";
-import Shh = require("web3-shh");
-import hexutil from "@/scripts/hexutil";
-import contactCfg from "@/scripts/contactCfg";
 import { contact } from "@/scripts/contact";
 
 @Component({
   components: { CompMessage }
 })
-export default class Chart extends Vue {
+export default class Chat extends Vue {
   private msg: string = "";
-  private chats: message.Message[] = [];
-  private shh: any;
-  private symKeyID: string = "";
-  private topic: string = "";
 
-  private get chatting(): contact.Group | contact.Private | null {
+  private get chatting(): contact.Group | contact.Private {
     return this.$store.state.chatting;
   }
 
-  private async created() {
-    this.shh = new Shh("ws://localhost:8546");
-    const group: contact.Group = contactCfg.groups[0];
-
-    this.symKeyID = await this.shh.generateSymKeyFromPassword(group.password);
-    this.topic = group.topic;
-
-    this.shh.subscribe(
-      "messages",
-      {
-        symKeyID: this.symKeyID,
-        topics: [this.topic]
-      },
-      (error: Error, message: any, subscription: any) => {
-        const msgHex: string = message.payload;
-        const msg: message.Message = hexutil.decodeFromHex(msgHex);
-        this.chats.push(msg);
-      }
-    );
+  private get chats(): message.Message[] {
+    return this.$store.state.chatLogs.get(this.chatting.id);
   }
 
   private async handleEnter() {
@@ -72,17 +48,14 @@ export default class Chart extends Vue {
       return;
     }
 
-    const msg: message.Message = new message.Message("Tom", msgFix, Date.now());
+    const msg: message.Message = new message.Message(
+      this.chatting.id,
+      "Tom",
+      msgFix,
+      Date.now()
+    );
 
-    const symKeyID = await this.shh.generateSymKeyFromPassword("hello");
-
-    const hash = await this.shh.post({
-      symKeyID: this.symKeyID,
-      topic: this.topic,
-      payload: hexutil.encodeToHex(JSON.stringify(msg)),
-      powTime: 3,
-      powTarget: 0.5
-    });
+    await this.$shh.send(this.chatting.topic, msg);
 
     setTimeout(() => {
       this.msg = "";

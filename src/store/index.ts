@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { store } from "@/store/store"
 import { contact } from '@/scripts/contact'
+import { message } from '@/scripts/message'
 
 Vue.use(Vuex)
 
@@ -27,6 +28,13 @@ export default new Vuex.Store({
     },
     setChatting: (state: store.State, payload: contact.Group | contact.Private) => {
       state.chatting = payload;
+    },
+    pushMessage: (state: store.State, payload: message.Message) => {
+      const logs = state.chatLogs.get(payload.chatID)
+      if (!logs) {
+        return
+      }
+      logs.push(payload)
     }
   },
   actions: {
