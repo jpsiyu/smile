@@ -27,7 +27,6 @@ export default class Message extends Vue {
 
   private get isMe(): boolean {
     const res = this.me.pubKey === this.msg.pubKey;
-    console.log("is me", res);
     return res;
   }
 }
@@ -44,7 +43,7 @@ export default class Message extends Vue {
     }
   }
   &-main {
-    margin-left: 10px;
+    margin: 0 10px;
     display: flex;
     flex-direction: column;
 
@@ -59,6 +58,21 @@ export default class Message extends Vue {
       padding: 5px 10px;
       word-break: break-all;
       white-space: pre-line;
+    }
+  }
+}
+
+.me {
+  justify-content: flex-end;
+  .msg-head {
+    order: 2;
+  }
+  .msg-main {
+    order: 1;
+    align-items: flex-end;
+    &__content {
+      background: #67c23a;
+      color: #000;
     }
   }
 }
