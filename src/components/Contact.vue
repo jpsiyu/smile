@@ -14,7 +14,7 @@
           @click="select(item)"
         >{{item.name}}</div>
       </el-collapse-item>
-      <el-collapse-item title="私聊" name="single">
+      <el-collapse-item title="私聊" name="private">
         <div class="cont-title" slot="title">
           <i class="fas fa-user"></i>
           <span>私聊</span>
@@ -39,6 +39,7 @@ import { contact } from "@/scripts/contact";
 @Component({})
 export default class ComContact extends Vue {
   private collapse: string = "";
+
   private get chatting(): contact.Group | contact.Private | null {
     return this.$store.state.chatting;
   }
@@ -49,6 +50,12 @@ export default class ComContact extends Vue {
 
   private get privates() {
     return this.$store.state.privates;
+  }
+
+  private mounted() {
+    this.chatting instanceof contact.Group
+      ? (this.collapse = "group")
+      : (this.collapse = "private");
   }
 
   private select(item: contact.Group | contact.Private) {
