@@ -1,36 +1,34 @@
 const Web3 = require("web3");
 import { message } from "@/scripts/message";
-import { hexutil } from "@/scripts/hexutil";
 import store from '@/store';
 
 export namespace shh {
+  const web3 = new Web3()
   export class Visitor {
     private url: string = "ws://localhost:8546";
     private symPasswd: string = "apple&banana";
     private symKeyID: string = "";
-    private web3: any;
 
     public async init(topics: string[]) {
-      this.web3 = new Web3();
-      this.web3.setProvider(new Web3.providers.WebsocketProvider(this.url))
-      await this.web3.eth.net.isListening()
+      web3.setProvider(new Web3.providers.WebsocketProvider(this.url))
+      await web3.eth.net.isListening()
 
-      this.symKeyID = await this.web3.shh.generateSymKeyFromPassword(this.symPasswd);
+      this.symKeyID = await web3.shh.generateSymKeyFromPassword(this.symPasswd);
 
       for (let topic of topics) {
         const options: any = {
           symKeyID: this.symKeyID,
           topics: [topic],
         }
-        this.web3.shh.subscribe("messages", options, this.rece)
+        web3.shh.subscribe("messages", options, this.rece)
       }
     }
 
     public async send(topic: string, message: message.Message) {
-      const hash = await this.web3.shh.post({
+      const hash = await web3.shh.post({
         symKeyID: this.symKeyID,
         topic,
-        payload: hexutil.encodeToHex(JSON.stringify(message)),
+        payload: web3.utils.utf8ToHex(JSON.stringify(message)),
         powTime: 3,
         powTarget: 0.5
       });
@@ -41,7 +39,8 @@ export namespace shh {
         return
       }
       const msgHex: string = message.payload;
-      const msg: message.Message = hexutil.decodeFromHex(msgHex);
+      const msgStr: string = web3.utils.hexToUtf8(msgHex);
+      const msg: message.Message = JSON.parse(msgStr)
       store.commit("pushMessage", msg)
     }
 
