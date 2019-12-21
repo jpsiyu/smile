@@ -1,6 +1,6 @@
 <template>
   <div class="chat">
-    <div class="chat-top">chat</div>
+    <div class="chat-top">{{chatting.name}}</div>
     <div class="chat-main" ref="main">
       <div class="chat-main-item" v-for="(item, index) in chats" :key="index">
         <CompMessage :msg="item" />
@@ -23,7 +23,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import CompMessage from "@/components/Message.vue";
 import { message } from "@/scripts/message";
-const Shh = require("web3-shh");
+import Shh = require("web3-shh");
 import hexutil from "@/scripts/hexutil";
 import contactCfg from "@/scripts/contactCfg";
 import { contact } from "@/scripts/contact";
@@ -37,6 +37,10 @@ export default class Chart extends Vue {
   private shh: any;
   private symKeyID: string = "";
   private topic: string = "";
+
+  private get chatting(): contact.Group | contact.Private | null {
+    return this.$store.state.chatting;
+  }
 
   private async created() {
     this.shh = new Shh("ws://localhost:8546");

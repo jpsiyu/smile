@@ -7,11 +7,11 @@
           <span>群聊</span>
         </div>
         <div
-          class="cont-group-item"
-          :class="{'select': selectedGroup && selectedGroup.id === item.id}"
+          class="cont-item"
+          :class="{'select': chatting.id === item.id}"
           v-for="(item, index) in groups"
           :key="index"
-          @click="selectGroup(item)"
+          @click="select(item)"
         >{{item.name}}</div>
       </el-collapse-item>
       <el-collapse-item title="私聊" name="single">
@@ -20,11 +20,11 @@
           <span>私聊</span>
         </div>
         <div
-          class="cont-priv-item"
-          :class="{'select': selectedPrivate && selectedPrivate.id === item.id}"
+          class="cont-item"
+          :class="{'select': chatting.id === item.id}"
           v-for="(item, index) in privates"
           :key="index"
-          @click="selectPrivate(item)"
+          @click="select(item)"
         >{{item.name}}</div>
       </el-collapse-item>
     </el-collapse>
@@ -35,30 +35,24 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { contact } from "@/scripts/contact";
-import contactCfg from "@/scripts/contactCfg";
 
 @Component({})
 export default class ComContact extends Vue {
   private collapse: string = "";
-  private selectedGroup: contact.Group | null = null;
-  private selectedPrivate: contact.Private | null = null;
+  private get chatting(): contact.Group | contact.Private | null {
+    return this.$store.state.chatting;
+  }
 
   private get groups() {
-    return contactCfg.groups;
+    return this.$store.state.groups;
   }
 
   private get privates() {
-    return contactCfg.privates;
+    return this.$store.state.privates;
   }
 
-  private selectGroup(group: contact.Group) {
-    this.selectedGroup = group;
-    this.selectedPrivate = null;
-  }
-
-  private selectPrivate(priv: contact.Private) {
-    this.selectedPrivate = priv;
-    this.selectedGroup = null;
+  private select(item: contact.Group | contact.Private) {
+    this.$store.commit("setChatting", item);
   }
 }
 </script>
@@ -74,16 +68,13 @@ export default class ComContact extends Vue {
     }
   }
 
-  &-group,
-  &-priv {
-    &-item {
-      background: var(--color-extra-light-border);
-      color: var(--color-regular-text);
-      cursor: pointer;
-      padding: 5px 40px;
-      &:hover {
-        background: var(--color-lighter-border);
-      }
+  &-item {
+    background: var(--color-extra-light-border);
+    color: var(--color-regular-text);
+    cursor: pointer;
+    padding: 5px 40px;
+    &:hover {
+      background: var(--color-lighter-border);
     }
   }
 
