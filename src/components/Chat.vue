@@ -62,19 +62,28 @@ export default class Chat extends Vue {
       return;
     }
 
-    const msg: message.Message = new message.Message(
-      this.chatting.id,
-      this.me.name,
-      this.me.pubKey,
-      msgFix,
-      Date.now(),
-      this.me.head
-    );
-
     if (this.chatting instanceof contact.Group) {
+      const msg: message.Message = new message.Message(
+        this.chatting.id,
+        this.me.name,
+        this.me.pubKey,
+        msgFix,
+        Date.now(),
+        this.me.head
+      );
       await this.$visitor.send(this.chatting.topic, msg);
     } else if (this.chatting instanceof contact.Private) {
+      const msg: message.Message = new message.Message(
+        "",
+        this.me.name,
+        this.me.pubKey,
+        msgFix,
+        Date.now(),
+        this.me.head
+      );
       await this.$visitor.sendPriv(this.chatting.pubKey, msg);
+      msg.chatID = this.chatting.pubKey;
+      this.$store.commit("pushMessage", msg);
     }
 
     setTimeout(() => {

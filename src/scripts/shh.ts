@@ -42,7 +42,7 @@ export namespace shh {
       const options = {
         privateKeyID: keypair
       }
-      web3.shh.subscribe("messages", options, this.rece)
+      web3.shh.subscribe("messages", options, this.recePriv)
     }
 
     public async send(topic: string, message: message.Message) {
@@ -71,7 +71,17 @@ export namespace shh {
       const msgHex: string = message.payload;
       const msgStr: string = web3.utils.hexToUtf8(msgHex);
       const msg: message.Message = JSON.parse(msgStr)
-      console.log(msg)
+      store.commit("pushMessage", msg)
+    }
+
+    public recePriv(error: Error, message: any, subscription: any) {
+      if (!message) {
+        return
+      }
+      const msgHex: string = message.payload;
+      const msgStr: string = web3.utils.hexToUtf8(msgHex);
+      const msg: message.Message = JSON.parse(msgStr)
+      msg.chatID = msg.pubKey
       store.commit("pushMessage", msg)
     }
 
