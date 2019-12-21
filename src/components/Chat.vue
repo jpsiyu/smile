@@ -27,6 +27,7 @@ import { contact } from "@/scripts/contact";
 import { mapState } from "vuex";
 import { user } from "@/scripts/user";
 import { shh } from "../scripts/shh";
+import { Watch } from "vue-property-decorator";
 
 @Component({
   components: { CompMessage }
@@ -44,6 +45,12 @@ export default class Chat extends Vue {
 
   private get me(): user.User {
     return this.$store.state.user;
+  }
+
+  @Watch("chats") private handleChatsChange() {
+    this.$nextTick(() => {
+      this.scrollBottom();
+    });
   }
 
   private async handleEnter() {
@@ -74,7 +81,6 @@ export default class Chat extends Vue {
 
     setTimeout(() => {
       this.msg = "";
-      this.scrollBottom();
     }, 100);
   }
 
