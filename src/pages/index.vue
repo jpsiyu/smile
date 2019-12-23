@@ -4,7 +4,7 @@
       <Contact />
     </div>
     <div class="home-chat">
-      <Chat />
+      <Chat v-if="chatting"/>
     </div>
   </div>
 </template>
@@ -14,10 +14,15 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import Contact from "@/components/Contact.vue";
 import Chat from "@/components/Chat.vue";
+import { contact } from "@/scripts/contact";
 @Component({
   components: { Contact, Chat }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  private get chatting(): contact.Group | contact.Private {
+    return this.$store.state.chatting;
+  }
+}
 </script>
 
 <style lang="postcss" scoped>

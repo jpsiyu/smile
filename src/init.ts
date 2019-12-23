@@ -45,7 +45,9 @@ const init = async (): Promise<void> => {
       console.log("init done")
       store.commit("setInit", true);
     })
-    .catch(() => { })
+    .catch((err: Error) => {
+      console.log(err)
+    })
 }
 
 export default init

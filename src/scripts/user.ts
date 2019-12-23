@@ -32,10 +32,12 @@ export namespace user {
 
     public async fillPubKey(): Promise<string> {
       if (this.pubKey) {
-        return this.pubKey
+        return Promise.resolve(this.pubKey)
       }
-      this.pubKey = await shh.getPubFromKeyPair(this.keypair)
-      return this.pubKey
+      return shh.getPubFromKeyPair(this.keypair)
+        .catch((err: Error) => {
+          throw (err)
+        })
     }
 
     public setPubKey(pubKey: string) {

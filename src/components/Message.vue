@@ -17,10 +17,10 @@ import { Prop } from "vue-property-decorator";
 import { message } from "@/scripts/message";
 import { user } from "@/scripts/user";
 
-@Component({
-  props: ["msg"]
-})
+@Component({})
 export default class Message extends Vue {
+  @Prop() private msg: message.Message;
+
   private get me(): user.User {
     return this.$store.state.user;
   }

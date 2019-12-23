@@ -1,5 +1,5 @@
 <template>
-  <div class="chat" v-if="chatting">
+  <div class="chat">
     <div class="chat-top">{{chatting.name}}</div>
     <div class="chat-main" ref="main">
       <div class="chat-main-item" v-for="(item, index) in chats" :key="index">
