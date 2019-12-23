@@ -14,17 +14,17 @@ export namespace user {
         return null
       }
       const userData: any = JSON.parse(str)
-      const user: User = new User(userData.keypair, userData.name, userData.head)
+      const user: User = new User(userData.keyPair, userData.name, userData.head)
       return user
     }
 
-    public keypair: string;
+    public keyPair: string;
     public name: string;
     public head: string;
     public pubKey: string;
 
-    constructor(keypair: string, name: string, head: string) {
-      this.keypair = keypair;
+    constructor(keyPair: string, name: string, head: string) {
+      this.keyPair = keyPair;
       this.name = name;
       this.head = head;
       this.pubKey = "";
@@ -34,7 +34,7 @@ export namespace user {
       if (this.pubKey) {
         return Promise.resolve(this.pubKey)
       }
-      return shh.getPubFromKeyPair(this.keypair)
+      return shh.getPubFromKeyPair(this.keyPair)
         .catch((err: Error) => {
           throw (err)
         })
@@ -50,14 +50,14 @@ export namespace user {
     }
 
     public async init(): Promise<void> {
-      const isValid: boolean = await shh.isKeyPairValid(this.keypair)
+      const isValid: boolean = await shh.isKeyPairValid(this.keyPair)
       if (isValid) {
         return Promise.resolve()
       }
 
       const keyPair: string = await shh.newKeyPair()
       console.log("regenerate key pair", keyPair)
-      this.keypair = keyPair
+      this.keyPair = keyPair
       this.save()
       await this.fillPubKey()
     }

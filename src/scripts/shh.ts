@@ -12,8 +12,8 @@ export namespace shh {
     return web3.shh.newKeyPair();
   }
 
-  export const getPubFromKeyPair = async (keypair: string) => {
-    return web3.shh.getPublicKey(keypair);
+  export const getPubFromKeyPair = async (keyPair: string) => {
+    return web3.shh.getPublicKey(keyPair);
   }
 
   export const initWeb3 = async () => {
@@ -25,8 +25,7 @@ export namespace shh {
     try {
       let res = await web3.shh.hasKeyPair(keyPair)
       return Promise.resolve(res)
-    }
-    catch {
+    } catch (err) {
       return Promise.resolve(false)
     }
   }
@@ -48,9 +47,9 @@ export namespace shh {
       }
     }
 
-    public startPrivSubscribe(keypair: string) {
+    public startPrivSubscribe(keyPair: string) {
       const options = {
-        privateKeyID: keypair
+        privateKeyID: keyPair
       }
       web3.shh.subscribe("messages", options, this.recePriv)
     }
