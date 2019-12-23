@@ -56,8 +56,8 @@ export default class AddFriend extends Vue {
       this.userInput.pubKey
     );
 
-    this.reset();
     this.$store.commit("addPrivate", priv);
+    this.hide();
   }
 }
 </script>
