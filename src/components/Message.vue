@@ -19,7 +19,7 @@ import { user } from "@/scripts/user";
 
 @Component({})
 export default class Message extends Vue {
-  @Prop() private msg: message.Message;
+  @Prop() private msg: message.Message | undefined;
 
   private get me(): user.User {
     return this.$store.state.user;
