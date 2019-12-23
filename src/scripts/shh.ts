@@ -6,7 +6,8 @@ export namespace shh {
   const web3 = new Web3()
   const POW_TIME: number = 3;
   const POW_TARGET: number = 0.5;
-  const URL: string = "ws://localhost:8546";
+  //const URL: string = "ws://localhost:8546";
+  const URL: string = "ws://192.168.0.111:8546";
 
   export const newKeyPair = async (): Promise<string> => {
     return web3.shh.newKeyPair();
