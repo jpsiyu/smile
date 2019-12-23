@@ -26,7 +26,7 @@ export default class Message extends Vue {
   }
 
   private get isMe(): boolean {
-    const res = this.me.pubKey === this.msg.pubKey;
+    const res = this.me.pubKey === this.msg!.pubKey;
     return res;
   }
 }
