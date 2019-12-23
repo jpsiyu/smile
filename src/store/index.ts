@@ -28,6 +28,12 @@ export default new Vuex.Store({
       state.groups.push(payload);
     },
     addPrivate: (state: store.State, payload: contact.Private) => {
+      const targe = state.privates.find((priv: contact.Private) => {
+        return priv.pubKey === payload.pubKey;
+      })
+      if (targe) {
+        return
+      }
       state.privates.push(payload);
     },
     setChatting: (state: store.State, payload: contact.Group | contact.Private) => {

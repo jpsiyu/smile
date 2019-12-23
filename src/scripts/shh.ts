@@ -1,6 +1,8 @@
 const Web3 = require("web3");
 import { message } from "@/scripts/message";
 import store from '@/store';
+import { user } from './user';
+import { contact } from './contact';
 
 export namespace shh {
   const web3 = new Web3()
@@ -52,7 +54,11 @@ export namespace shh {
       const options = {
         privateKeyID: keyPair
       }
-      web3.shh.subscribe("messages", options, this.recePriv)
+      web3.shh.subscribe("messages", options,
+        (error: Error, message: any, subscription: any) => {
+          this.recePriv(error, message, subscription)
+        }
+      )
     }
 
     public async send(topic: string, message: message.Message) {
@@ -93,8 +99,13 @@ export namespace shh {
       const msg: message.Message = JSON.parse(msgStr)
       msg.chatID = msg.pubKey
       store.commit("pushMessage", msg)
+      this.addPriv(msg)
     }
 
+    private addPriv(msg: message.Message) {
+      const priv: contact.Private = new contact.Private(msg.pubKey, msg.sender, msg.pubKey)
+      store.commit("addPrivate", priv)
+    }
   }
 
 }
