@@ -29,6 +29,7 @@
         >{{item.name}}</div>
       </el-collapse-item>
     </el-collapse>
+    <AddFriend ref="addFriend" />
   </div>
 </template>
 
@@ -36,8 +37,11 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { contact } from "@/scripts/contact";
+import AddFriend from "@/components/popup/AddFriend.vue";
 
-@Component({})
+@Component({
+  components: { AddFriend }
+})
 export default class ComContact extends Vue {
   private collapse: string = "";
 
@@ -64,16 +68,8 @@ export default class ComContact extends Vue {
   }
 
   private addPriv() {
-    this.$prompt("请输入对方pubKey", "提示")
-      .then((data: any) => {
-        if (!data.value) {
-          return;
-        }
-        const pubKey = data.value;
-        const priv = new contact.Private(pubKey, "user", pubKey);
-        this.$store.commit("addPrivate", priv);
-      })
-      .catch((err: Error) => {});
+    const addFriendComp: any = this.$refs.addFriend;
+    addFriendComp.show();
   }
 }
 </script>
