@@ -21,7 +21,6 @@ const init = async (): Promise<void> => {
     router.push({ path: "/signup" })
     return Promise.reject()
   }
-
   return Promise.resolve()
     .then(() => {
       return me!.init()

@@ -30,14 +30,13 @@ export namespace user {
       this.pubKey = "";
     }
 
-    public async fillPubKey(): Promise<string> {
-      if (this.pubKey) {
-        return Promise.resolve(this.pubKey)
+    public async fillPubKey(): Promise<void> {
+      try {
+        const pubKey = await shh.getPubFromKeyPair(this.keyPair)
+        this.pubKey = pubKey
+      } catch (err) {
+        console.log(err)
       }
-      return shh.getPubFromKeyPair(this.keyPair)
-        .catch((err: Error) => {
-          throw (err)
-        })
     }
 
     public setPubKey(pubKey: string) {
@@ -51,14 +50,11 @@ export namespace user {
 
     public async init(): Promise<void> {
       const isValid: boolean = await shh.isKeyPairValid(this.keyPair)
-      if (isValid) {
-        return Promise.resolve()
+      if (!isValid) {
+        const keyPair: string = await shh.newKeyPair()
+        this.keyPair = keyPair
+        this.save()
       }
-
-      const keyPair: string = await shh.newKeyPair()
-      console.log("regenerate key pair", keyPair)
-      this.keyPair = keyPair
-      this.save()
       await this.fillPubKey()
     }
   }
