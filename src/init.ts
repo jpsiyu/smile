@@ -19,7 +19,7 @@ const init = async (): Promise<void> => {
   let me = user.User.load()
   if (!me) {
     router.push({ path: "/signup" })
-    return Promise.reject()
+    return Promise.resolve()
   }
   return Promise.resolve()
     .then(() => {
