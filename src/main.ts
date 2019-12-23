@@ -6,6 +6,7 @@ import store from './store'
 import '@/plugins/axios'
 import '@/plugins/element'
 import "@/plugins/visitor"
+import "@/plugins/clipboard";
 
 import "@/assets/color.css"
 
