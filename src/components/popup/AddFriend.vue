@@ -50,6 +50,11 @@ export default class AddFriend extends Vue {
   }
 
   private sure() {
+    if (this.userInput.name.length > 6) {
+      this.$message({ message: "名字太长了啊(6个字符)!", type: "warning" });
+      return;
+    }
+
     const priv = new contact.Private(
       this.userInput.pubKey,
       this.userInput.name,
