@@ -8,7 +8,7 @@ export namespace shh {
   const POW_TARGET: number = 0.5;
   const URL: string = "ws://localhost:8546";
 
-  export const newKeyPair = async (): Promise<any> => {
+  export const newKeyPair = async (): Promise<string> => {
     return web3.shh.newKeyPair();
   }
 
@@ -19,6 +19,16 @@ export namespace shh {
   export const initWeb3 = async () => {
     web3.setProvider(new Web3.providers.WebsocketProvider(URL))
     await web3.eth.net.isListening()
+  }
+
+  export const isKeyPairValid = async (keyPair: string): Promise<boolean> => {
+    try {
+      let res = await web3.shh.hasKeyPair(keyPair)
+      return Promise.resolve(res)
+    }
+    catch {
+      return Promise.resolve(false)
+    }
   }
 
   export class Visitor {

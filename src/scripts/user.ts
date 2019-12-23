@@ -49,6 +49,18 @@ export namespace user {
       localStorage.setItem(key, str)
     }
 
+    public async init(): Promise<void> {
+      const isValid: boolean = await shh.isKeyPairValid(this.keypair)
+      if (isValid) {
+        return Promise.resolve()
+      }
+
+      const keyPair: string = await shh.newKeyPair()
+      console.log("regenerate key pair", keyPair)
+      this.keypair = keyPair
+      this.save()
+      await this.fillPubKey()
+    }
   }
 
 }

@@ -24,10 +24,9 @@ const init = async (): Promise<void> => {
 
   return Promise.resolve()
     .then(() => {
-      return me!.fillPubKey()
+      return me!.init()
     })
     .then(() => {
-      console.log(me!.pubKey)
       store.commit("setUser", me)
       store.commit("setGroups", groups);
       store.commit("setPrivates", privates);
